@@ -1,3 +1,8 @@
+# Clayton@RaezionSecurity
+# This app is a work-in-progress which aims to be a productivity tool for ride-share/delivery app users.
+# The essential functions are calculating and tracking financial and mileage info to determine earnings
+# and trends. The user should be able to read and write from csv data to store their profile info.
+
 import csv
 import datetime
 import daily_entry_object
@@ -7,51 +12,28 @@ def main():
 
 	running = 1
 	
-	#current_profile = "new_profile"
-	current_file = "profile.csv"
-	
 	entry_list = dict()
 	
 	user_profile_stats = profile_stats.Profile_Stats() 
-	
-	try:
-		#f = open(current_file, "x")
-		
-		with open(current_file, 'w', newline='') as csvfile:
-			fieldnames = ['date', 'day_of_week', 'start_time', 'end_time']
-			writer = csv.DictWriter(csvfile, fieldnames=fieldnames) 
-			writer.writeheader()
-			
-	except FileExistsError:
-		print("profile already exists!")
-	
-	#with open(current_file, newline='') as csvfile:
-		#reader = csv.DictReader(csvfile)
-		#for row in reader:
-			#print(row['start_time'], row['end_time'])
-			
-	
-		
-	
+
 	while (running):
-		menu(current_file, entry_list, user_profile_stats)
+		menu(entry_list, user_profile_stats)
 		
-def menu(current_file, entry_list, user_profile_stats):
+def menu(entry_list, user_profile_stats):
 
 	while(True):
 	
 		user_profile_stats = calculate_stats(user_profile_stats, entry_list)
-	
-		print("\nCURRENT PROFILE:", current_file)
 
 		print("\n********MENU********\n")
-		print("1. Stats")
+		print("1. Show Stats")
 		print("2. Add Entry")
-		print("3. Report")
-		print("4. Export Report")
-		print("5. Quit\n")
+		print("3. Show Entry Report")
+		print("4. Export Data to CSV")
+		print("5. Import Data from CSV")
+		print("6. Quit\n")
 	
-		user_selection = int(input("\nPlease enter your selection:"))
+		user_selection = int(input("\nPlease enter your selection:\n"))
 	
 		print("\n*****************************************\n")
 	
@@ -68,9 +50,12 @@ def menu(current_file, entry_list, user_profile_stats):
 			show_entry_report(entry_list)
 
 		elif user_selection == 4:
-			print("\nFunctionality Pending...\n")
+			write_data_to_csv(entry_list)
 
 		elif user_selection == 5:
+			print("\n*********Import Data from CSV********")
+
+		elif user_selection == 6:
 			exit()
 		
 		else:
@@ -424,29 +409,34 @@ def show_entry_report(entry_list):
 
 	time_format = "%H:%M"
 
-	sorted_entry_list = {key: val for key, val in sorted(entry_list.items(), key = lambda ele: ele[0])}
+	if len(entry_list) == 0:
+		print("\n*******No Items in Dictionary*********")
 
-	for date in sorted_entry_list:
+	else:
+
+		sorted_entry_list = {key: val for key, val in sorted(entry_list.items(), key = lambda ele: ele[0])}
+
+		for date in sorted_entry_list:
 	
-		print("\n*******Showing info for entry:", sorted_entry_list[date].entry_date.strftime("%A, %B %d, %Y"))
-		print("Shift Start Time:", sorted_entry_list[date].shift_start_time.strftime(time_format))
-		print("Shift End Time:", sorted_entry_list[date].shift_end_time.strftime(time_format))
-		print("Shift Duration:", sorted_entry_list[date].shift_duration)
-		print("Shift Lunch Start Time:", sorted_entry_list[date].shift_lunch_start_time.strftime(time_format))
-		print("Shift Lunch End Time:", sorted_entry_list[date].shift_lunch_end_time.strftime(time_format))
-		print("Shift Lunch Duration:", sorted_entry_list[date].shift_lunch_duration)
-		print("Shift Hours Worked:", sorted_entry_list[date].shift_hours_worked)
-		print("Miles Driven:", sorted_entry_list[date].miles)
-		print("MPG for Shift:", sorted_entry_list[date].mpg)
-		print("Gallons of Fuel Used:", sorted_entry_list[date].gallons_used)
-		print("Fuel Price Paid:", sorted_entry_list[date].fuel_price)
-		print("Fuel Expense for Shift:", sorted_entry_list[date].fuel_cost)
-		print("Fare Received for Shift:", sorted_entry_list[date].fare)
-		print("Tips received for shift:", sorted_entry_list[date].tips)
-		print("Gross Earnings for Shift:", sorted_entry_list[date].gross_earnings)
-		print("Net Earnings for Shift:", sorted_entry_list[date].net_earnings)
-		print("Average Hourly Rate for Shift:", sorted_entry_list[date].hourly_rate)
-		print("**********************************\n")
+			print("\n*******Showing info for entry:", sorted_entry_list[date].entry_date.strftime("%A, %B %d, %Y"))
+			print("Shift Start Time:", sorted_entry_list[date].shift_start_time.strftime(time_format))
+			print("Shift End Time:", sorted_entry_list[date].shift_end_time.strftime(time_format))
+			print("Shift Duration:", sorted_entry_list[date].shift_duration)
+			print("Shift Lunch Start Time:", sorted_entry_list[date].shift_lunch_start_time.strftime(time_format))
+			print("Shift Lunch End Time:", sorted_entry_list[date].shift_lunch_end_time.strftime(time_format))
+			print("Shift Lunch Duration:", sorted_entry_list[date].shift_lunch_duration)
+			print("Shift Hours Worked:", sorted_entry_list[date].shift_hours_worked)
+			print("Miles Driven:", sorted_entry_list[date].miles)
+			print("MPG for Shift:", sorted_entry_list[date].mpg)
+			print("Gallons of Fuel Used:", sorted_entry_list[date].gallons_used)
+			print("Fuel Price Paid:", sorted_entry_list[date].fuel_price)
+			print("Fuel Expense for Shift:", sorted_entry_list[date].fuel_cost)
+			print("Fare Received for Shift:", sorted_entry_list[date].fare)
+			print("Tips received for shift:", sorted_entry_list[date].tips)
+			print("Gross Earnings for Shift:", sorted_entry_list[date].gross_earnings)
+			print("Net Earnings for Shift:", sorted_entry_list[date].net_earnings)
+			print("Average Hourly Rate for Shift:", sorted_entry_list[date].hourly_rate)
+			print("**********************************\n")
 		
 def show_quick_stats(user_profile_stats):
 
@@ -568,5 +558,29 @@ def calculate_stats(user_profile_stats, entry_list):
 	user_profile_stats.av_fuel_expense = av_fuel_expense
 
 	return user_profile_stats
+
+def write_data_to_csv(entry_list):
+
+	print("\n**********Export Data to CSV*********\n")
+	print("\nWriting data to csv file with write method...\n")
 	
+	current_file = input("Please enter the filename, excluding extension:\n")
+	current_file = current_file + ".csv"
+	
+	with open(current_file, 'w', newline='') as csvfile:
+	
+			fieldnames = ['date', 'shift_start_time', 'shift_end_time', 'shift_lunch_start_time', 'shift_lunch_end_time', 'shift_duration', 'shift_lunch_duration', 'shift_hours_worked', 'miles', 'mpg', 'gallons_used', 
+			'fuel_price', 'fuel_cost', 'fare', 'tips', 'gross_earnings', 'net_earnings', 'hourly_rate']
+			writer = csv.DictWriter(csvfile, fieldnames=fieldnames) 
+			writer.writeheader()
+
+			sorted_entry_list = {key: val for key, val in sorted(entry_list.items(), key = lambda ele: ele[0])}
+			
+			for entry in sorted_entry_list:
+				row = {'date' : entry_list[entry].entry_date, 'shift_start_time' : entry_list[entry].shift_start_time, 'shift_end_time' : entry_list[entry].shift_end_time, 'shift_lunch_start_time' : 
+				entry_list[entry].shift_lunch_start_time, 'shift_lunch_end_time' : entry_list[entry].shift_lunch_end_time, 'shift_duration' : entry_list[entry].shift_duration, 'shift_lunch_duration' : 
+				entry_list[entry].shift_lunch_duration, 'shift_hours_worked' : entry_list[entry].shift_hours_worked, 'miles' : entry_list[entry].miles, 'mpg' : entry_list[entry].mpg, 'gallons_used' : 
+				entry_list[entry].gallons_used, 'fuel_price' : entry_list[entry].fuel_price, 'fuel_cost' : entry_list[entry].fuel_cost, 'fare' : entry_list[entry].fare, 'tips' : entry_list[entry].tips, 
+				'gross_earnings' : entry_list[entry].gross_earnings, 'net_earnings' : entry_list[entry].net_earnings, 'hourly_rate' : entry_list[entry].hourly_rate}
+				writer.writerow(row)
 main()

@@ -440,28 +440,36 @@ def show_entry_report(entry_list):
 		
 def show_quick_stats(user_profile_stats):
 
-	print("\nNumber of work days in profile....:", user_profile_stats.num_days) 
-	print("Total number of hours worked......:", user_profile_stats.hours_worked_sum) 
-	print("Total number of lunch hours.......:", user_profile_stats.lunch_duration_sum)
-	print("Average shift duration:...........:", user_profile_stats.av_shift_duration)
-	print("Average Fare per shift:...........:", user_profile_stats.av_fare)
-	print("Average lunch shift duration:.....:", user_profile_stats.av_lunch_duration)
-	print("Total fare received:..............:", user_profile_stats.total_fare)
-	print("Average hours worked:.............:", user_profile_stats.av_hours_worked)
-	print("Average tips per shift:...........:", user_profile_stats.av_tips)
-	print("Average miles driven:.............:", user_profile_stats.av_miles)
-	print("Total tips received...............:", user_profile_stats.total_tips)
-	print("Total Miles Driven:...............:", user_profile_stats.total_miles_driven)
-	print("Average gross earnings............:", user_profile_stats.av_gross)
-	print("Average MPG:......................:", user_profile_stats.av_mpg)
-	print("Total gross earnings..............:", user_profile_stats.total_gross)
-	print("Average fuel use:.................:", user_profile_stats.av_fuel_use)
-	print("Average net earnings..............:", user_profile_stats.av_net)
-	print("Total gallons of fuel used:.......:", user_profile_stats.total_fuel_use)
-	print("Average hourly rate...............:", user_profile_stats.av_hourly_rate)
-	print("Average fuel price paid:..........:", user_profile_stats.av_fuel_price)
-	print("Average fuel expense per shift....:", user_profile_stats.av_fuel_expense)
-	print("Total fuel expense................:", user_profile_stats.total_fuel_use)
+	print("\nNumber of work days in profile....:      ", user_profile_stats.num_days) 
+	print("Total number of hours worked......:", "{:10.2f}".format(user_profile_stats.hours_worked_sum))
+	print("Average hours worked:.............:", "{:10.2f}".format(user_profile_stats.av_hours_worked))
+	print("Average shift duration:...........:", "{:10.2f}".format(user_profile_stats.av_shift_duration)) 
+	print("Total number of lunch hours.......:", "{:10.2f}".format(user_profile_stats.lunch_duration_sum))
+	print("Average lunch shift duration:.....:", "{:10.2f}".format(user_profile_stats.av_lunch_duration))
+	print("Total fare received:..............:", "{:10.2f}".format(user_profile_stats.total_fare))
+	print("Average Fare per shift:...........:", "{:10.2f}".format(user_profile_stats.av_fare))
+	print("Total tips received...............:", "{:10.2f}".format(user_profile_stats.total_tips))
+	print("Average tips per shift:...........:", "{:10.2f}".format(user_profile_stats.av_tips))
+	print("Total Miles Driven:...............:", "{:10.2f}".format(user_profile_stats.total_miles_driven))
+	print("Average miles driven:.............:", "{:10.2f}".format(user_profile_stats.av_miles))
+	print("Total gross earnings..............:", "{:10.2f}".format(user_profile_stats.total_gross))
+	print("Average gross earnings............:", "{:10.2f}".format(user_profile_stats.av_gross))
+	print("Total net earnings................:", "{:10.2f}".format(user_profile_stats.total_net))
+	print("Average net earnings..............:", "{:10.2f}".format(user_profile_stats.av_net))
+	print("Average hourly rate...............:", "{:10.2f}".format(user_profile_stats.av_hourly_rate))
+	print("Total gallons of fuel used:.......:", "{:10.2f}".format(user_profile_stats.total_fuel_use))
+	print("Total fuel expense................:", "{:10.2f}".format(user_profile_stats.total_fuel_use))
+	print("Average fuel price paid:..........:", "{:10.2f}".format(user_profile_stats.av_fuel_price))
+	print("Average fuel expense per shift....:", "{:10.2f}".format(user_profile_stats.av_fuel_expense))
+	print("Average fuel use:.................:", "{:10.2f}".format(user_profile_stats.av_fuel_use))
+	print("Average MPG:......................:", "{:10.2f}".format(user_profile_stats.av_mpg))
+	
+	
+	#print("\nYour hourly rate is", "{:10.2f}".format(hourly_rate), "dollars per hour.")
+	
+	
+	
+	
 	
 
 def calculate_stats(user_profile_stats, entry_list):
